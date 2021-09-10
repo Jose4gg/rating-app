@@ -23,4 +23,10 @@ class ReviewTest < ActiveSupport::TestCase
     assert_not review.save
     assert_equal [:rating], review.errors.attribute_names
   end
+
+  test 'should not save without product' do
+    review = build(:review, product: nil)
+    assert_not review.save
+    assert_equal [:product], review.errors.attribute_names
+  end
 end
