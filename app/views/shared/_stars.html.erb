@@ -37,7 +37,7 @@
         <%= review.rating %>
       </h5>
       <p class="m-0 review__details_text">
-        <%= ", #{review.details.downcase}" %>
+        <%= ", #{review.details[0, 1].downcase + review.details[1..-1]}" %>
       </p>
     </div>
   <% end %>
