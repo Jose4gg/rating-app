@@ -1,0 +1,44 @@
+<% stars = [5, 4, 3, 2, 1] %>
+
+<% review = nil if local_assigns[:review].nil? %>
+
+<% custom_id = nil if local_assigns[:custom_id].nil? %>
+
+<% rating = nil if local_assigns[:rating].nil? %>
+
+
+<div class="d-flex">
+  <div class="rating__container">
+    <%= field_set_tag nil, class: 'rating', disabled: rating || review&.rating do %>
+      <% stars.each do |star| %>
+        <%= radio_button_tag star_name(review: review, custom_id: custom_id), star, star == (rating || review&.rating), { disabled: rating || review&.rating }  %>
+        <label class="full" for="<%= star_name(review: review, custom_id: custom_id) + "_#{star}" %>" title="<%= pluralize(star, 'star') %>"></label>
+      <% end %>
+
+      <%# <input type="radio" id="star4half" name="rating" value="4 and a half" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label> %>
+      <%# <%= radio_button_tag "rating__#{id || review.id}", 4, rating == (4 || rating), { class: "rating__radio__button", disabled: false }  %>
+      <%# <label class = "full" for="star4" title="4 stars"></label> %>
+      <%# <input type="radio" id="star3half" name="rating" value="3 and a half" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label> %>
+      <%# <%= radio_button_tag "rating__#{id || review.id}", 3, rating == (3 || rating), { class: "rating__radio__button", disabled: false }  %>
+      <%# <label class = "full" for="star3" title="3 stars"></label> %>
+      <%# <input type="radio" id="star2half" name="rating" value="2 and a half" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label> %>
+      <%# <%= radio_button_tag "rating__#{id || review.id}", 2, rating == (2 || rating), { class: "rating__radio__button", disabled: false }  %>
+      <%# <label class = "full" for="star2" title="2 stars"></label> %>
+      <%# <input type="radio" id="star1half" name="rating" value="1 and a half" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label> %>
+      <%# <%= radio_button_tag "rating__#{id || review.id}", 1, rating == (1 || rating), { class: "rating__radio__button", disabled: false }  %>
+      <%# <label class = "full" for="star1" title="1 star"></label> %>
+      <%# <input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label> %>
+    <% end %>
+  </div>
+
+  <% if review.present? %>
+    <div class="review__details__container">
+      <h5 class="m-0">
+        <%= review.rating %>
+      </h5>
+      <p class="m-0 review__details_text">
+        <%= ", #{review.details.downcase}" %>
+      </p>
+    </div>
+  <% end %>
+</div>

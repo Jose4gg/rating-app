@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="product-container">
+    <div class="product-header">
+      <h1>
+        <%= @product.name %>
+      </h1>
+
+      <div class="review-row">
+        <div class="d-flex">
+          <h2 class="m-0" style="padding-right: 8px;">3.8</h2>
+          <%= render partial: "shared/stars", locals: { custom_id: "total_score", rating: 4 } %>
+        </div>
+        <div>
+          <button>Add review</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-bottom">
+      <div class="divider"></div>
+
+      <h3 class="m-0" style="padding-bottom: 8px;">Reviews</h3>
+
+      <div class="reviews__container">
+        <% @product.reviews.order(created_at: :desc).each do |review| %>
+          <%= render partial: "shared/stars", locals: { review: review } %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
