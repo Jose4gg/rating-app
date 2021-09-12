@@ -25,7 +25,7 @@ export function ProductDetails() {
                 <Stars
                   key="total_score"
                   customId="total_score"
-                  rating={Math.round(parseFloat(product.rating)).toFixed(0)}
+                  rating={Math.round(product.rating * 2) / 2}
                 />
               </div>
               <div>
