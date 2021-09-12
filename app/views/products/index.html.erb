@@ -7,7 +7,9 @@
 
       <div class="review-row">
         <div class="d-flex">
-          <h2 class="m-0" style="padding-right: 8px;">3.8</h2>
+          <h2 class="m-0" style="padding-right: 8px;">
+            <%= number_with_precision(@product.rating, precision: 2) %>
+          </h2>
           <%= render partial: "shared/stars", locals: { custom_id: "total_score", rating: 4 } %>
         </div>
         <div>
