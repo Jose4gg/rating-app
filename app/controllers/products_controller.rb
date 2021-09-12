@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   def index
-    @product = Product.first
+    @product = Product.find_or_create_by(name: 'Mean Machine Book')
   end
 
   def create_review
