@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from "react";
-import { atom, useRecoilState, useRecoilValue } from "recoil";
+import { atom, useRecoilState } from "recoil";
 import { uniqBy } from "lodash";
+import { createReviewSub } from "../channels/review_channel";
 
 export const productState = atom({
   key: "product_state",
@@ -9,6 +10,7 @@ export const productState = atom({
 
 export const useProductWithReview = () => {
   const [product, setProduct] = useRecoilState(productState);
+  const setNewReview = useSetNewReviewToProduct();
 
   useEffect(() => {
     const search = async () => {
@@ -20,6 +22,17 @@ export const useProductWithReview = () => {
     };
     search();
   }, []);
+
+  useEffect(() => {
+    const sub = createReviewSub({
+      received(data) {
+        setNewReview(JSON.parse(data));
+      },
+    });
+    return () => {
+      sub.unsubscribe();
+    };
+  }, [setNewReview]);
 
   return product;
 };
@@ -34,6 +47,6 @@ export const useSetNewReviewToProduct = () => {
         reviews: uniqBy([...product.reviews, review], "id"),
       });
     },
-    [product]
+    [product, setProduct]
   );
 };

@@ -7,4 +7,10 @@ class Review < ApplicationRecord
   }
 
   belongs_to :product
+
+  after_create :deliver_new_review
+
+  def deliver_new_review
+    ActionCable.server.broadcast('review', to_json(include: :product))
+  end
 end

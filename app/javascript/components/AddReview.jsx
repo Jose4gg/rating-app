@@ -48,6 +48,14 @@ export function AddReview({ productId, hidden, setModalOpen }) {
         <div className="product-header">
           <h1>What’s your rating?</h1>
           <Formik
+            validate={(values) => {
+              const errors = {};
+              if (!values.rating__rating) {
+                errors.rating__rating = "No rating selected";
+              }
+
+              return errors;
+            }}
             initialValues={{
               product_id: productId,
               details: "",
@@ -55,16 +63,7 @@ export function AddReview({ productId, hidden, setModalOpen }) {
             }}
             onSubmit={onSubmit}
           >
-            {({
-              values,
-              errors,
-              touched,
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              isSubmitting,
-              /* and other goodies */
-            }) => (
+            {({ handleChange, handleSubmit, isSubmitting }) => (
               <form onSubmit={handleSubmit} ref={form}>
                 <label htmlFor="rating__rating">Rating</label>
                 <Stars
