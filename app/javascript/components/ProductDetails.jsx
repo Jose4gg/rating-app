@@ -1,42 +1,64 @@
-import React from "react";
+import React, { useState } from "react";
+import { Stars } from "./Stars";
+import { AddReview } from "./AddReview";
+import { useProductWithReview } from "../state/product_state";
+import { orderBy } from "lodash";
 
-export default function ProductDetails() {
+export function ProductDetails() {
+  const [modalOpen, setModalOpen] = useState(false);
+  const product = useProductWithReview();
+
+  if (!product) return null;
+
   return (
-    <div class="container">
-      <div class="product-container">
-        <div class="product-header">
-          <h1>{/* <%= @product.name %> */}</h1>
+    <>
+      <div className="container">
+        <div className="product-container">
+          <div className="product-header">
+            <h1>{product.name}</h1>
 
-          <div class="review-row">
-            <div class="d-flex">
-              <h2 class="m-0" style={{ paddingRight: 8 }}>
-                {/* <%= number_with_precision(@product.rating, precision: 2) %> */}
-              </h2>
-              {/* <%= render partial: "shared/stars", locals: { custom_id: "total_score", rating: 4 } %> */}
-            </div>
-            <div>
-              <button class="btn__primary" onclick="openCreateReviewOverlay()">
-                Add review
-              </button>
+            <div className="review-row">
+              <div className="d-flex">
+                <h2 className="m-0" style={{ paddingRight: 8 }}>
+                  {parseFloat(product.rating).toFixed(2)}
+                </h2>
+                <Stars
+                  key="total_score"
+                  customId="total_score"
+                  rating={Math.round(parseFloat(product.rating)).toFixed(0)}
+                />
+              </div>
+              <div>
+                <button
+                  className="btn__primary"
+                  onClick={() => setModalOpen(true)}
+                >
+                  Add review
+                </button>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="product-bottom">
-          <div class="divider"></div>
+          <div className="product-bottom">
+            <div className="divider"></div>
 
-          <h3 class="m-0" style={{ paddingBottom: 8 }}>
-            Reviews
-          </h3>
+            <h3 className="m-0" style={{ paddingBottom: 8 }}>
+              Reviews
+            </h3>
 
-          <div class="reviews__container">
-            {/* <% @product.reviews.order(created_at: :desc).each do |review| %>
-          <%= render partial: "shared/stars", locals: { review: review } %>
-        <% end %> */}
+            <div className="reviews__container">
+              {orderBy(product.reviews, "created_at", "desc").map((review) => (
+                <Stars key={review.id.toString()} review={review} />
+              ))}
+            </div>
           </div>
         </div>
       </div>
-      {/* <%= render partial: "create_review", locals: { product_id: @product.id } %> */}
-    </div>
+      <AddReview
+        productId={product.id}
+        hidden={!modalOpen}
+        setModalOpen={setModalOpen}
+      />
+    </>
   );
 }

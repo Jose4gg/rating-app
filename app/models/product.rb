@@ -5,7 +5,9 @@ class Product < ApplicationRecord
 
   has_many :reviews
 
+  attribute :rating, :float
+
   def rating
-    reviews.average(:rating)
+    @rating = reviews.average(:rating)
   end
 end
