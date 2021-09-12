@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Stars } from "./Stars";
 import { Formik } from "formik";
 import { useSetNewReviewToProduct } from "../state/product_state";
 
 export function AddReview({ productId, hidden, setModalOpen }) {
   const setNewReview = useSetNewReviewToProduct();
-  const onSubmit = (values, { setSubmitting, resetForm }) => {
+  const form = useRef();
+
+  const onSubmit = (values, { setSubmitting }) => {
     setSubmitting(true);
 
     fetch("/reviews/create", {
@@ -31,7 +33,7 @@ export function AddReview({ productId, hidden, setModalOpen }) {
         setNewReview(review);
         setModalOpen(false);
         setSubmitting(false);
-        resetForm();
+        form.current.reset();
       });
 
     return false;
@@ -63,7 +65,7 @@ export function AddReview({ productId, hidden, setModalOpen }) {
               isSubmitting,
               /* and other goodies */
             }) => (
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit} ref={form}>
                 <label htmlFor="rating__rating">Rating</label>
                 <Stars
                   onChange={handleChange}
