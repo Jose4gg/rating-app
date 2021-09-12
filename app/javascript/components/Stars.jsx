@@ -12,7 +12,7 @@ export function Stars({
   form = false,
   customId = null,
   review = null,
-  stars = [5, 4, 3, 2, 1],
+  stars = [5, 4.5, 4, 3.5, 3, 2.5, 2, 1.5, 1, 0.5],
   rating = null,
   onChange = undefined,
 }) {
@@ -35,7 +35,7 @@ export function Stars({
                 disabled={rating || review?.rating}
               />
               <label
-                className="full"
+                className={star % 1 === 0 ? "full" : "half"}
                 htmlFor={`${starName({ review, customId })}_${star}`}
                 title={pluralize("star", star, true)}
               ></label>
