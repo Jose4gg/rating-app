@@ -11,7 +11,7 @@
           <%= render partial: "shared/stars", locals: { custom_id: "total_score", rating: 4 } %>
         </div>
         <div>
-          <a class="btn__primary" href="/page">
+          <a class="btn__primary" href="<%= create_review_path(@product) %>">
             Add review
           </a>
         </div>

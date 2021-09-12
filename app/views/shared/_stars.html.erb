@@ -6,8 +6,10 @@
 
 <% rating = nil if local_assigns[:rating].nil? %>
 
+<% form = false if local_assigns[:form].nil? %>
 
-<div class="d-flex">
+
+<div class="d-flex <%= form ? "rating_input_form" : "" %>">
   <div class="rating__container">
     <%= field_set_tag nil, class: 'rating', disabled: rating || review&.rating do %>
       <% stars.each do |star| %>
