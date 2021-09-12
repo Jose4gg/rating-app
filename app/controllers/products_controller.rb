@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
   def index
     @product = Product.first
+    render component: 'ProductDetails'
   end
 
   def create_review
