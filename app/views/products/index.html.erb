@@ -10,7 +10,7 @@
           <h2 class="m-0" style="padding-right: 8px;">
             <%= number_with_precision(@product.rating, precision: 2) %>
           </h2>
-          <%= render partial: "shared/stars", locals: { custom_id: "total_score", rating: 4 } %>
+          <%= render partial: "shared/stars", locals: { custom_id: "total_score", rating: @product.rating.round.to_i } %>
         </div>
         <div>
           <button class="btn__primary" onclick="openCreateReviewOverlay()">
