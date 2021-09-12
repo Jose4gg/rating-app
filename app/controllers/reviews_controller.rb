@@ -5,7 +5,7 @@ class ReviewsController < ApplicationController
     @review = Review.new(review_params)
 
     if @review.save
-      render json: @review
+      render json: @review.to_json(include: :product)
     else
       render json: { message: 'Something went wrong.' }
     end

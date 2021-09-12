@@ -30,7 +30,7 @@ export const useSetNewReviewToProduct = () => {
   return useCallback(
     (review) => {
       setProduct({
-        ...product,
+        ...review.product,
         reviews: uniqBy([...product.reviews, review], "id"),
       });
     },
