@@ -4,7 +4,7 @@ class ProductsController < ApplicationController
   end
 
   def product_with_reviews
-    product = Product.first
+    product = Product.find_or_create_by(name: 'Mean Machine Book')
     render json: product.to_json(include: :reviews)
   end
 
