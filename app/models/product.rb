@@ -4,4 +4,8 @@ class Product < ApplicationRecord
   validates :name, presence: true
 
   has_many :reviews
+
+  def rating
+    reviews.average(:rating)
+  end
 end
