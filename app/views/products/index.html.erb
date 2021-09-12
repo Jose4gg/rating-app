@@ -11,9 +11,9 @@
           <%= render partial: "shared/stars", locals: { custom_id: "total_score", rating: 4 } %>
         </div>
         <div>
-          <a class="btn__primary" href="<%= create_review_path(@product) %>">
+          <button class="btn__primary" onclick="openCreateReviewOverlay()">
             Add review
-          </a>
+          </button>
         </div>
       </div>
     </div>
@@ -31,3 +31,5 @@
     </div>
   </div>
 </div>
+
+<%= render partial: "create_review", locals: { product_id: @product.id } %>
